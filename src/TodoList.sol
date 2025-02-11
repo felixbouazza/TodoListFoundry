@@ -4,6 +4,7 @@ pragma solidity 0.8.28;
 
 import {Task} from "./structs/Task.sol";
 import {TaskState} from "./enums/TaskState.sol";
+import {console} from "forge-std/Test.sol";
 
 contract TodoList {
     address public immutable owner;
@@ -29,6 +30,15 @@ contract TodoList {
         owner = msg.sender;
     }
 
+    function createTask(bytes calldata description) external payable onlyOwner {
+        if (msg.value != taskCost) {
+            revert IncorrectEtherAmount();
+        }
+
+        tasks.push(Task(description, TaskState.Todo, block.timestamp));
+        emit TaskCreated(tasks.length - 1);
+    }
+
     function getTask(uint256 taskId) external view onlyOwner returns (bytes memory description, TaskState state) {
         return (tasks[taskId].description, tasks[taskId].state);
     }
@@ -39,15 +49,6 @@ contract TodoList {
             ids[i] = i;
         }
         return ids;
-    }
-
-    function createTask(bytes calldata description) external payable onlyOwner {
-        if (msg.value != taskCost) {
-            revert IncorrectEtherAmount();
-        }
-
-        tasks.push(Task(description, TaskState.Todo, block.timestamp));
-        emit TaskCreated(tasks.length - 1);
     }
 
     function updateTaskDescription(uint256 taskId, bytes calldata description) external onlyOwner {
