@@ -4,7 +4,6 @@ pragma solidity 0.8.28;
 
 import {Task} from "./structs/Task.sol";
 import {TaskState} from "./enums/TaskState.sol";
-import {console} from "forge-std/Test.sol";
 
 contract TodoList {
     address public immutable owner;
@@ -49,16 +48,6 @@ contract TodoList {
             ids[i] = i;
         }
         return ids;
-    }
-
-    function updateTaskDescription(uint256 taskId, bytes calldata description) external onlyOwner {
-        tasks[taskId].description = description;
-        emit TaskUpdated(taskId);
-    }
-
-    function updateTaskState(uint256 taskId, TaskState state) external onlyOwner {
-        tasks[taskId].state = state;
-        emit TaskUpdated(taskId);
     }
 
     function updateTask(uint256 taskId, bytes calldata description, TaskState state) external onlyOwner {
