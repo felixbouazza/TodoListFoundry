@@ -49,10 +49,10 @@ export default function Home() {
             metamaskAccount ?
             <div className="flex flex-row space-x-4 justify-center items-center">
                 <p>{metamaskAccount}</p>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={disconnect}>Disconnect</button>
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={disconnect}>Se déconnecter</button>
             </div>
             :
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={connectToMetamask}>Connect to metamask</button>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={connectToMetamask}>Se connecter à Metamask</button>
         }
       </header>
       <main className="flex flex-col space-y-4 max-w-2xl mx-auto">
@@ -60,8 +60,8 @@ export default function Home() {
         {
           metamaskAccount && !contract &&
           <div className="flex flex-row space-x-4 justify-center items-center">
-            <input className="text-black border border-slate-200 px-4 py-2 rounded-md" type="text" onChange={(e) => setContractAddress(e.target.value)} placeholder="Contract address" />
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={connectToContract}>Connect to contract</button>
+            <input className="text-black border border-slate-200 px-4 py-2 rounded-md" type="text" onChange={(e) => setContractAddress(e.target.value)} placeholder="Adresse du contrat" />
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={connectToContract}>Se connecter au contrat</button>
           </div>
         }
         {contract && <TasksTable contract={contract} />}

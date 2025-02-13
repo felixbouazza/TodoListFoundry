@@ -65,11 +65,11 @@ export default function TasksTable({ contract }: { contract: ethers.Contract }) 
     const convertTaskStatus = (status: number) => {
         switch(Number(status)) {
             case 0:
-                return "Todo";
+                return "À faire";
             case 1:
-                return "Doing";
+                return "En cours";
             case 2:
-                return "Done";
+                return "Fait";
             default:
                 return "Unknown";
         }
@@ -109,13 +109,12 @@ export default function TasksTable({ contract }: { contract: ethers.Contract }) 
         {initialLoading ? <p>Loading...</p> : 
         <div className="flex flex-col space-y-4">
             <div className="flex flex-row space-x-4 justify-center items-center">
-                <input disabled={eventLoading} className="text-black border border-slate-200 px-4 py-2 rounded-md" type="text" onChange={(e) => setNewTaskDescription(e.target.value)} placeholder="New task description" />
-                {newTaskDescription.trim() && <button disabled={eventLoading} className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={createTask}>Create</button>}
+                <input disabled={eventLoading} className="text-black border border-slate-200 px-4 py-2 rounded-md" type="text" onChange={(e) => setNewTaskDescription(e.target.value)} placeholder="Nouvelle tâche" />
+                {newTaskDescription.trim() && <button disabled={eventLoading} className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={createTask}>Créer</button>}
             </div>
             <table className="table-auto border-collapse border border-slate-200 w-full">
                 <thead>
                     <tr>
-                        <th className="border border-slate-200 px-4 py-2">ID</th>
                         <th className="border border-slate-200 px-4 py-2">Description</th>
                         <th className="border border-slate-200 px-4 py-2">State</th>
                         <th className="border border-slate-200 px-4 py-2">Actions</th>
@@ -125,12 +124,11 @@ export default function TasksTable({ contract }: { contract: ethers.Contract }) 
                     {tasks.map((task: Task, index: number) => {
                         return (
                             <tr key={index}>
-                                <td className="border border-slate-200 px-4 py-2">{task.id}</td>
                                 <td className="border border-slate-200 px-4 py-2">{task.description}</td>
                                 <td className="border border-slate-200 px-4 py-2">{convertTaskStatus(task.status)}</td>
                                 <td className="border border-slate-200 px-4 py-2 flex flex-row space-x-4">
-                                    <button className="bg-green-500 text-white px-4 py-2 rounded-md" disabled={eventLoading} onClick={() => openModalForTask(task)}>Edit</button>
-                                    <button className="bg-red-500 text-white px-4 py-2 rounded-md" disabled={eventLoading} onClick={() => deleteTask(task.id)}>Delete</button>
+                                    <button className="bg-green-500 text-white px-4 py-2 rounded-md" disabled={eventLoading} onClick={() => openModalForTask(task)}>Modifier</button>
+                                    <button className="bg-red-500 text-white px-4 py-2 rounded-md" disabled={eventLoading} onClick={() => deleteTask(task.id)}>Supprimer</button>
                                 </td>
                             </tr>
                         );
@@ -138,7 +136,7 @@ export default function TasksTable({ contract }: { contract: ethers.Contract }) 
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th><button className="text-yellow-500 px-4 py-2 rounded-md">Rafraichir les données</button></th>
+                        <th><button className="bg-yellow-500 text-white px-4 py-2 rounded-md">Rafraichir les données</button></th>
                     </tr>
                 </tfoot>
             </table>
@@ -182,9 +180,9 @@ export default function TasksTable({ contract }: { contract: ethers.Contract }) 
                         defaultValue={Number(updatedTask?.status)}
                         label="Statut"
                     >
-                        <MenuItem value={0}>Todo</MenuItem>
-                        <MenuItem value={1}>Doing</MenuItem>
-                        <MenuItem value={2}>Done</MenuItem>
+                        <MenuItem value={0}>À faire</MenuItem>
+                        <MenuItem value={1}>En cours</MenuItem>
+                        <MenuItem value={2}>Fait</MenuItem>
                     </Select>
                 </DialogContent>
                 <DialogActions>
